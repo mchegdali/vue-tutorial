@@ -1,10 +1,12 @@
 <template>
-  <v-layout full-height>
-    <myToolbar />
-    <v-main>
-      <router-view></router-view>
-    </v-main>
-  </v-layout>
+  <v-app>
+    <v-layout full-height>
+      <myToolbar />
+      <v-main>
+        <router-view></router-view>
+      </v-main>
+    </v-layout>
+  </v-app>
 </template>
 
 <script setup>

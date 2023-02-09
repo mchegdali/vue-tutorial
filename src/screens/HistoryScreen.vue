@@ -15,7 +15,7 @@ let history = computed(() => {
     <v-container>
       <v-row class="mb-2"><h1>Historique</h1></v-row>
       <template v-for="item of history" :key="item.key">
-        <v-card :text="`${item.m}m (${item.ft}ft en ${item.time}s)`"></v-card>
+        <v-card :text="`${item.m}m (${item.ft}ft) en ${item.time}s`"></v-card>
       </template>
     </v-container>
   </div>

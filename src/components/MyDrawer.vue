@@ -20,6 +20,11 @@ import { ref } from "vue";
 const items = ref([
   { icon: "mdi-home", text: "Accueil", action: "/" },
   { icon: "mdi-history", text: "Historique", action: "/history" },
+  {
+    icon: "mdi-file-document-plus-outline",
+    text: "Ajouter",
+    action: "/history/add",
+  },
   { icon: "mdi-help", text: "À propos", action: "/about" },
 ]);
 </script>
