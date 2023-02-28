@@ -3,7 +3,9 @@ import Home from "../screens/HomeScreen.vue";
 import About from "../screens/AboutScreen.vue";
 import History from "../screens/HistoryScreen.vue";
 import AddHistory from "../screens/AddHistoryScreen.vue";
+import Pong from "../screens/PongScreen.vue";
 
+// table-tennis
 /**
  * @type {import('vue-router').RouteRecordRaw}
  */
@@ -33,11 +35,11 @@ const routes = [
     name: "About",
     component: About,
   },
-  // {
-  //   path: "/add",
-  //   name: "AddHistory",
-  //   component: AddHistory,
-  // },
+  {
+    path: "/pong",
+    name: "Pong",
+    component: Pong,
+  },
 ];
 
 const router = createRouter({

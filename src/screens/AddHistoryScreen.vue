@@ -17,6 +17,7 @@
             min="0"
             step="0.1"
             @change="handleDistanceChange"
+            :value="meters"
           ></v-text-field>
         </v-col>
 
@@ -30,6 +31,7 @@
             min="0"
             step="0.01"
             @change="handleTimeChange"
+            :value="time"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -94,6 +96,10 @@ async function addToHistory() {
     history.push(data);
     localStorage.setItem("history", JSON.stringify(history));
   }
+
+  meters.value = "";
+  feet.value = "";
+  time.value = "";
 }
 </script>
 

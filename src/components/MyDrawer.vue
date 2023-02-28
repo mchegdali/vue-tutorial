@@ -26,5 +26,6 @@ const items = ref([
     action: "/history/add",
   },
   { icon: "mdi-help", text: "À propos", action: "/about" },
+  { icon: "mdi-table-tennis", text: "Pong", action: "/pong" },
 ]);
 </script>
