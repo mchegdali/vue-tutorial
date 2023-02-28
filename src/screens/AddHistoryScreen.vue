@@ -1,70 +1,26 @@
-<template>
-  <v-form @submit.prevent="addToHistory" ref="addHistoryForm">
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="4">
-          <h1>Ajouter une donnée</h1>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-text-field
-            name="m"
-            type="number"
-            label="Mètres"
-            :rules="floatRules"
-            required
-            min="0"
-            step="0.1"
-            @change="handleDistanceChange"
-            :value="meters"
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-text-field
-            name="time"
-            type="number"
-            label="Temps"
-            :rules="floatRules"
-            required
-            min="0"
-            step="0.01"
-            @change="handleTimeChange"
-            :value="time"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-btn type="submit" color="success">Valider</v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
-</template>
-
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, computed } from "vue";
 
-const meters = ref("");
-const feet = ref("");
-const time = ref("");
+const meters = ref(0);
+const feet = ref(0);
+const time = ref(0);
 
-const data = reactive({
-  time: time,
-  m: meters,
-  ft: feet,
+const data = computed(() => {
+  return {
+    time: time.value.toFixed(2),
+    m: meters.value.toFixed(2),
+    ft: feet.value.toFixed(2),
+  }
 });
 
 function handleDistanceChange(e) {
   const value = e.target.valueAsNumber;
-  meters.value = value.toFixed(2);
-  feet.value = value.toFixed(2);
+  meters.value = value;
+  feet.value = 3.28084 * value;
 }
 
 function handleTimeChange(e) {
-  time.value = e.target.valueAsNumber.toFixed(2);
+  time.value = e.target.valueAsNumber;
 }
 
 const floatRules = ref([
@@ -77,7 +33,7 @@ const floatRules = ref([
 /**
  * Add data to local storage
  */
-async function addToHistory() {
+async function addToHistory(e) {
   const isMetersValid = floatRules.value
     .map((cb) => cb(meters.value))
     .every((v) => v == true);
@@ -91,16 +47,40 @@ async function addToHistory() {
       ? JSON.parse(localStorage.getItem("history"))
       : [];
 
-    console.log(data);
-
-    history.push(data);
+    history.push(data.value);
     localStorage.setItem("history", JSON.stringify(history));
   }
 
-  meters.value = "";
-  feet.value = "";
-  time.value = "";
+  e.target.reset();
 }
 </script>
+
+<template>
+  <v-form @submit.prevent="addToHistory" ref="addHistoryForm">
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="4">
+          <h1>Ajouter une donnée</h1>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-text-field name="m" type="number" label="Mètres" :rules="floatRules" required min="0"
+            @change="handleDistanceChange"></v-text-field>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-text-field name="time" type="number" label="Temps" :rules="floatRules" required min="0" step="0.01"
+            @change="handleTimeChange"></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-btn type="submit" color="success">Valider</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-form>
+</template>
 
 <style scoped></style>
